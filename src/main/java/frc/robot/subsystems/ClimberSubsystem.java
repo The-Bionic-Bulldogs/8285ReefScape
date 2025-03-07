@@ -58,23 +58,23 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   //#region local controls (private)
-  private void stopClimber() {
+  private void stop() {
     m_motor.set(0.0);
   }
-  private void startClimber(boolean inverted) {
+  private void start(boolean inverted) {
     m_motor.set((inverted) ? Constants.climber.kRevSpeed : Constants.climber.kFwdSpeed);
   }
   //#endregion local controls
 
   //#region public commands
   public Command stopCommand() {
-    return runOnce(() -> stopClimber());
+    return runOnce(() -> stop());
   }
   public Command fwdCommand() {
-    return runOnce(() -> startClimber(false));
+    return runOnce(() -> start(false));
   }
   public Command revCommand() {
-    return runOnce(() -> startClimber(true));
+    return runOnce(() -> start(true));
   }
   //#endregion public commands
 
