@@ -1,13 +1,16 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.signals.InvertedValue;
 
+import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -18,7 +21,8 @@ import frc.robot.constants.Constants;
  */
 public class ElevatorSubsystem extends SubsystemBase {
 	private static ElevatorSubsystem instance;
-  private SparkMax m_motor;
+  private TalonFX m_motor;
+  private TalonFX m_follower;
   //private and public variables defined here
 
 
@@ -44,15 +48,32 @@ public class ElevatorSubsystem extends SubsystemBase {
    */
   public void init() {
     // set initial stuff, etc.
-    SparkMaxConfig defaultConfig = new SparkMaxConfig();
-    defaultConfig
-      .smartCurrentLimit(30)
-      .idleMode(IdleMode.kCoast)
-      .inverted(Constants.intake.kInverted);
+    TalonFXConfiguration fxConfig = new TalonFXConfiguration();
+    Slot0Configs clConfigs = new Slot0Configs()
+      .withKP(Constants.elevator.kP)
+      .withKI(Constants.elevator.kI)
+      .withKD(Constants.elevator.kD)
+      .withKS(Constants.elevator.kS)
+      .withKV(Constants.elevator.kV)
+      .withKA(Constants.elevator.kA)
+      .withKG(Constants.elevator.kG);
+    fxConfig.Slot0 = clConfigs;
+    SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
+      .withReverseSoftLimitEnable(Constants.elevator.kSoftReverseLimitEnable)
+      .withReverseSoftLimitThreshold(Constants.elevator.kSoftReverseLimit)
+      .withForwardSoftLimitEnable(Constants.elevator.kSoftForwardLimitEnable)
+      .withForwardSoftLimitThreshold(Constants.elevator.kSoftForwardLimit);
+    fxConfig.SoftwareLimitSwitch = softLimitSwitchConfigs;
+    MotorOutputConfigs mOutputConfigs = new MotorOutputConfigs()
+      .withNeutralMode(Constants.elevator.kNeutralMode)
+      .withInverted((Constants.elevator.kInverted) ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive);
+    fxConfig.MotorOutput = mOutputConfigs;
+    m_motor = new TalonFX(Constants.elevator.kMotor1Id);
+    m_motor.getConfigurator().apply(fxConfig);
 
-      m_motor = new SparkMax(Constants.intake.kMotorId, MotorType.kBrushed); //775 is brushed motor
-      m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    //m_motor.setInverted(false);
+    m_follower = new TalonFX(Constants.elevator.kMotor2Id);
+    m_follower.getConfigurator().apply(fxConfig);
+    m_follower.setControl(new Follower(m_motor.getDeviceID(), Constants.elevator.kInvertFromLeader));
   }
   
   @Override
