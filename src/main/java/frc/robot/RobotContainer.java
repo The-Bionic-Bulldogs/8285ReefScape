@@ -16,12 +16,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class RobotContainer {
     //init the subsystems
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
+    public ClimberSubsystem climber = ClimberSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -73,8 +75,8 @@ public class RobotContainer {
         joystick.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         // These are your bindings for your subsystems
-        joystick.leftBumper().onTrue(intake.fwdIntakeCommand()).onFalse(intake.stopIntakeCommand());
-        joystick.rightBumper().onTrue(intake.revIntakeCommand()).onFalse(intake.stopIntakeCommand());
+        joystick.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
+        joystick.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
