@@ -37,6 +37,7 @@ public class Constants {
     public class intake {
       public static final int kMotorId = 19; //id of intake motor
       public static final boolean kInverted = false; //invert motor
+      public static final NeutralMode kNeutralMode = NeutralMode.Brake;
       public static final double kFwdSpeed = 1.0; //motor power for intake/outtake
       public static final double kRevSpeed = -1.0; //should be negative
     }

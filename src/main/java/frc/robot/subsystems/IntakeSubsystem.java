@@ -1,12 +1,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,7 +14,7 @@ import frc.robot.constants.Constants;
  */
 public class IntakeSubsystem extends SubsystemBase {
 	private static IntakeSubsystem instance;
-  private SparkMax m_motor;
+  private WPI_TalonSRX m_motor;
   //private and public variables defined here
 
 
@@ -44,15 +40,11 @@ public class IntakeSubsystem extends SubsystemBase {
    */
   public void init() {
     // set initial stuff, etc.
-    SparkMaxConfig defaultConfig = new SparkMaxConfig();
-    defaultConfig
-      .smartCurrentLimit(30)
-      .idleMode(IdleMode.kCoast)
-      .inverted(Constants.intake.kInverted);
-
-      m_motor = new SparkMax(Constants.intake.kMotorId, MotorType.kBrushed); //775 is brushed motor
-      m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    //m_motor.setInverted(false);
+    m_motor = new WPI_TalonSRX(Constants.intake.kMotorId); //CIM is brushed motor
+    m_motor.configFactoryDefault(); //reset controller settings
+    m_motor.set(ControlMode.PercentOutput,0); //stop any output
+    m_motor.setNeutralMode(Constants.intake.kNeutralMode);
+    m_motor.setInverted(Constants.intake.kInverted);
   }
   
   @Override
