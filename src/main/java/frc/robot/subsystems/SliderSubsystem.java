@@ -1,12 +1,10 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +17,7 @@ import frc.robot.constants.Constants;
 public class SliderSubsystem extends SubsystemBase {
 	private static SliderSubsystem instance;
   //private and public variables defined here
-  private SparkMax m_motor;
+  private WPI_TalonSRX m_motor;
 
   /**
 	 * Returns the instance of the SliderSubsystem subsystem.
@@ -42,15 +40,11 @@ public class SliderSubsystem extends SubsystemBase {
    */
   public void init() {
     // set initial stuff, etc.
-    SparkMaxConfig defaultConfig = new SparkMaxConfig();
-    defaultConfig
-      .smartCurrentLimit(30)
-      .idleMode(IdleMode.kBrake)
-      .inverted(Constants.slider.kInverted);
-
-      m_motor = new SparkMax(Constants.slider.kMotorId, MotorType.kBrushed); //CIM is brushed motor
-      m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    //m_motor.setInverted(false);
+      m_motor = new WPI_TalonSRX(Constants.slider.kMotorId); //CIM is brushed motor
+      m_motor.configFactoryDefault(); //reset controller settings
+      m_motor.set(ControlMode.PercentOutput,0); //stop any output
+      m_motor.setNeutralMode(Constants.slider.kNeutralMode);
+      m_motor.setInverted(Constants.slider.kInverted);
   }
   
   @Override

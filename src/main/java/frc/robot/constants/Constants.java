@@ -7,6 +7,8 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Second;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 //Sometimes it is useful to comment out the following to see what variables or what controller buttons are not assigned yet
 @SuppressWarnings("unused") //We silence the "unused variables" warnings in VSCode
 /**
@@ -53,6 +55,7 @@ public class Constants {
     public class slider {
       public static final int kMotorId = 18;
       public static final boolean kInverted = false;
+      public static final NeutralMode kNeutralMode = NeutralMode.Brake;
       public static final double kFwdSpeed = 0.25;
       public static final double kRevSpeed = -0.25;
     }
