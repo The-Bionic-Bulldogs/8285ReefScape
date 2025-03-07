@@ -16,26 +16,28 @@ import frc.robot.constants.Constants;
  * This subsystem handles managing the Template.
  * It is responsible for doing some stuff.
  */
-public class ClimberSubsystem extends SubsystemBase {
-	private static ClimberSubsystem instance;
-  //private and public variables defined here
+public class ElevatorSubsystem extends SubsystemBase {
+	private static ElevatorSubsystem instance;
   private SparkMax m_motor;
+  //private and public variables defined here
+
 
   /**
-	 * Returns the instance of the ClimberSubsystem subsystem.
+	 * Returns the instance of the ElevatorSubsystem subsystem.
 	 * The purpose of this is to only create an instance if one does not already exist.
-	 * @return ClimberSubsystem instance
+	 * @return ElevatorSubsystem instance
 	 */
-  public static ClimberSubsystem getInstance() {
+  public static ElevatorSubsystem getInstance() {
 		if (instance == null)
-			instance = new ClimberSubsystem();
+			instance = new ElevatorSubsystem();
 		return instance;
 	}
   
-  public ClimberSubsystem() {
+  public ElevatorSubsystem() {
     //initialize values for private and public variables, etc.
     init();
   }
+
   
   /**
    * The init method resets and operational state of the subsystem
@@ -45,10 +47,10 @@ public class ClimberSubsystem extends SubsystemBase {
     SparkMaxConfig defaultConfig = new SparkMaxConfig();
     defaultConfig
       .smartCurrentLimit(30)
-      .idleMode(IdleMode.kBrake)
-      .inverted(Constants.climber.kInverted);
+      .idleMode(IdleMode.kCoast)
+      .inverted(Constants.intake.kInverted);
 
-      m_motor = new SparkMax(Constants.climber.kMotorId, MotorType.kBrushed); //CIM is brushed motor
+      m_motor = new SparkMax(Constants.intake.kMotorId, MotorType.kBrushed); //775 is brushed motor
       m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     //m_motor.setInverted(false);
   }
@@ -61,10 +63,11 @@ public class ClimberSubsystem extends SubsystemBase {
   private void stop() {
     m_motor.set(0.0);
   }
+
   private void start(boolean inverted) {
-    m_motor.set((inverted) ? Constants.climber.kRevSpeed : Constants.climber.kFwdSpeed);
+    m_motor.set((inverted) ? Constants.intake.kRevSpeed : Constants.intake.kFwdSpeed);
   }
-  //#endregion local controls
+  //#endregion local controls (private)
 
   //#region public commands
   public Command stopCommand() {
@@ -77,5 +80,4 @@ public class ClimberSubsystem extends SubsystemBase {
     return runOnce(() -> start(true));
   }
   //#endregion public commands
-
 }

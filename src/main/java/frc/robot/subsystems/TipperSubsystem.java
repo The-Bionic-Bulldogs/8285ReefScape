@@ -46,9 +46,9 @@ public class TipperSubsystem extends SubsystemBase {
     defaultConfig
       .smartCurrentLimit(30)
       .idleMode(IdleMode.kBrake)
-      .inverted(Constants.climber.kInverted);
+      .inverted(Constants.tipper.kInverted);
 
-      m_motor = new SparkMax(Constants.climber.kMotorId, MotorType.kBrushed); //CIM is brushed motor
+      m_motor = new SparkMax(Constants.tipper.kMotorId, MotorType.kBrushed); //CIM is brushed motor
       m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     //m_motor.setInverted(false);
   }

@@ -16,23 +16,23 @@ import frc.robot.constants.Constants;
  * This subsystem handles managing the Template.
  * It is responsible for doing some stuff.
  */
-public class SliderSubsystem extends SubsystemBase {
-	private static SliderSubsystem instance;
+public class LifterSubsystem extends SubsystemBase {
+	private static LifterSubsystem instance;
   //private and public variables defined here
   private SparkMax m_motor;
 
   /**
-	 * Returns the instance of the SliderSubsystem subsystem.
+	 * Returns the instance of the lifterSubsystem subsystem.
 	 * The purpose of this is to only create an instance if one does not already exist.
-	 * @return SliderSubsystem instance
+	 * @return lifterSubsystem instance
 	 */
-  public static SliderSubsystem getInstance() {
+  public static LifterSubsystem getInstance() {
 		if (instance == null)
-			instance = new SliderSubsystem();
+			instance = new LifterSubsystem();
 		return instance;
 	}
   
-  public SliderSubsystem() {
+  public LifterSubsystem() {
     //initialize values for private and public variables, etc.
     init();
   }
@@ -46,9 +46,9 @@ public class SliderSubsystem extends SubsystemBase {
     defaultConfig
       .smartCurrentLimit(30)
       .idleMode(IdleMode.kBrake)
-      .inverted(Constants.slider.kInverted);
+      .inverted(Constants.lifter.kInverted);
 
-      m_motor = new SparkMax(Constants.slider.kMotorId, MotorType.kBrushed); //CIM is brushed motor
+      m_motor = new SparkMax(Constants.lifter.kMotorId, MotorType.kBrushed); //CIM is brushed motor
       m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     //m_motor.setInverted(false);
   }
@@ -62,7 +62,7 @@ public class SliderSubsystem extends SubsystemBase {
     m_motor.set(0.0);
   }
   private void start(boolean inverted) {
-    m_motor.set((inverted) ? Constants.tipper.kRevSpeed : Constants.tipper.kFwdSpeed);
+    m_motor.set((inverted) ? Constants.lifter.kRevSpeed : Constants.lifter.kFwdSpeed);
   }
   //#endregion local controls
 

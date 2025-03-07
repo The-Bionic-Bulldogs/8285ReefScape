@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.TipperSubsystem;
@@ -25,9 +26,10 @@ import frc.robot.subsystems.TipperSubsystem;
 public class RobotContainer {
     //init the subsystems
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
-    public ClimberSubsystem climber = ClimberSubsystem.getInstance();
+    public LifterSubsystem lifter = LifterSubsystem.getInstance();
     public TipperSubsystem tipper = TipperSubsystem.getInstance();
     public SliderSubsystem slider = SliderSubsystem.getInstance();
+    public ElevatorSubsystem elevator = ElevatorSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -82,15 +84,18 @@ public class RobotContainer {
         //left and right bumpers for intake/outtake
         joystick.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
         joystick.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
-        //pov up and down for climber
-        joystick.povUp().onTrue(climber.fwdCommand()).onFalse(climber.stopCommand());
-        joystick.povDown().onTrue(climber.revCommand()).onFalse(climber.stopCommand());
+        //pov up and down for lifter
+        joystick.povUp().onTrue(lifter.fwdCommand()).onFalse(lifter.stopCommand());
+        joystick.povDown().onTrue(lifter.revCommand()).onFalse(lifter.stopCommand());
         //pov left and right for tipper
         joystick.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
         joystick.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
         //x and y for slider
         joystick.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
         joystick.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
+        //a and b for the elevator
+        joystick.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
+        joystick.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
