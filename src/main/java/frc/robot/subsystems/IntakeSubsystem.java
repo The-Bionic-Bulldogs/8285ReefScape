@@ -60,24 +60,24 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   //#region local controls (private)
-  private void stopIntake() {
+  private void stop() {
     m_motor.set(0.0);
   }
 
-  private void startIntake(boolean inverted) {
+  private void start(boolean inverted) {
     m_motor.set((inverted) ? Constants.intake.kRevSpeed : Constants.intake.kFwdSpeed);
   }
   //#endregion local controls (private)
 
   //#region public commands
   public Command stopCommand() {
-    return runOnce(() -> stopIntake());
+    return runOnce(() -> stop());
   }
   public Command fwdCommand() {
-    return runOnce(() -> startIntake(false));
+    return runOnce(() -> start(false));
   }
   public Command revCommand() {
-    return runOnce(() -> startIntake(true));
+    return runOnce(() -> start(true));
   }
   //#endregion public commands
 }
