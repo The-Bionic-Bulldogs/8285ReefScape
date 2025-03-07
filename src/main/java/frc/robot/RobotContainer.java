@@ -19,6 +19,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.SliderSubsystem;
 import frc.robot.subsystems.TipperSubsystem;
 
 public class RobotContainer {
@@ -26,6 +27,7 @@ public class RobotContainer {
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
     public ClimberSubsystem climber = ClimberSubsystem.getInstance();
     public TipperSubsystem tipper = TipperSubsystem.getInstance();
+    public SliderSubsystem slider = SliderSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -86,6 +88,9 @@ public class RobotContainer {
         //pov left and right for tipper
         joystick.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
         joystick.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
+        //x and y for slider
+        joystick.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
+        joystick.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
 
 
         drivetrain.registerTelemetry(logger::telemeterize);

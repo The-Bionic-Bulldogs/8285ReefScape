@@ -32,21 +32,27 @@ public class Constants {
     public static final double kElekA = .20;
 
     public class intake {
-      public static final int kMotorId = 2; //id of intake motor
+      public static final int kMotorId = 19; //id of intake motor
       public static final boolean kInverted = false; //invert motor
       public static final double kFwdSpeed = 1.0; //motor power for intake/outtake
       public static final double kRevSpeed = -1.0; //should be negative
     }
     public class climber {
-      public static final int kMotorId = 3; //id of climber motor
+      public static final int kMotorId = 16; //id of climber motor
       public static final boolean kInverted = false; //invert motor
       public static final double kFwdSpeed = 1.0; //motor power for climb
       public static final double kRevSpeed = -1.0; //should be negative
     }
     public class tipper {
-      public static final int kMotorId = 4; //id of tipper motor
+      public static final int kMotorId = 17; //id of tipper motor
       public static final boolean kInverted = false;
       public static final double kFwdSpeed = 1.0;
       public static final double kRevSpeed = -1.0; //should be negative
+    }
+    public class slider {
+      public static final int kMotorId = 18;
+      public static final boolean kInverted = false;
+      public static final double kFwdSpeed = 0.25;
+      public static final double kRevSpeed = -0.25;
     }
 }
