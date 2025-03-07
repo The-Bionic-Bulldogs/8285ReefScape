@@ -52,15 +52,62 @@ public class Constants {
     public class tipper {
       public static final int kMotorId = 17; //id of tipper motor
       public static final boolean kInverted = false;
+      public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
       public static final double kFwdSpeed = 1.0;
       public static final double kRevSpeed = -1.0; //should be negative
+      //Limits
+      public static final boolean kSoftForwardLimitEnable = false;
+      public static final double kSoftForwardLimit = 3.0;
+      public static final boolean kSoftReverseLimitEnable = true;
+      public static final double kSoftReverseLimit = -0.01;
+      //For motion magic
+      public static final double kP = 5.0;
+      public static final double kI = 0.0;
+      public static final double kD = 0.0;
+      public static final double kS = 0.02;
+      public static final double kG = 1.0;
+      public static final double kV = 3.5;
+      public static final double kA = 0.20;
+      public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
+      public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
+      //These will be needed for position controls later
+      public class positions {
+        public static final double DOWN = 0.0;
+        public static final double L1 = 1.0;
+        public static final double L2 = 2.0;
+        public static final double L3 = 3.0;
+        public static final double L4 = 4.5;
+      }
     }
     public class slider {
       public static final int kMotorId = 18;
       public static final boolean kInverted = false;
-      public static final NeutralMode kNeutralMode = NeutralMode.Brake;
+      public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
       public static final double kFwdSpeed = 0.25;
       public static final double kRevSpeed = -0.25;
+      //Limits
+      public static final boolean kSoftForwardLimitEnable = false;
+      public static final double kSoftForwardLimit = 3.0;
+      public static final boolean kSoftReverseLimitEnable = true;
+      public static final double kSoftReverseLimit = -0.01;
+      //For motion magic
+      public static final double kP = 5.0;
+      public static final double kI = 0.0;
+      public static final double kD = 0.0;
+      public static final double kS = 0.02;
+      public static final double kG = 1.0;
+      public static final double kV = 3.5;
+      public static final double kA = 0.20;
+      public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
+      public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
+      //These will be needed for position controls later
+      public class positions {
+        public static final double DOWN = 0.0;
+        public static final double L1 = 1.0;
+        public static final double L2 = 2.0;
+        public static final double L3 = 3.0;
+        public static final double L4 = 4.5;
+      }
     }
     public class elevator {
       public static final int kMotor1Id = 14;

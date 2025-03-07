@@ -1,10 +1,12 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.hardware.TalonFXS;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +19,7 @@ import frc.robot.constants.Constants;
 public class SliderSubsystem extends SubsystemBase {
 	private static SliderSubsystem instance;
   //private and public variables defined here
-  private WPI_TalonSRX m_motor;
+  private TalonFXS m_motor;
 
   /**
 	 * Returns the instance of the SliderSubsystem subsystem.
@@ -40,11 +42,28 @@ public class SliderSubsystem extends SubsystemBase {
    */
   public void init() {
     // set initial stuff, etc.
-      m_motor = new WPI_TalonSRX(Constants.slider.kMotorId); //CIM is brushed motor
-      m_motor.configFactoryDefault(); //reset controller settings
-      m_motor.set(ControlMode.PercentOutput,0); //stop any output
-      m_motor.setNeutralMode(Constants.slider.kNeutralMode);
-      m_motor.setInverted(Constants.slider.kInverted);
+    TalonFXSConfiguration fxConfig = new TalonFXSConfiguration();
+    Slot0Configs clConfigs = new Slot0Configs()
+      .withKP(Constants.slider.kP)
+      .withKI(Constants.slider.kI)
+      .withKD(Constants.slider.kD)
+      .withKS(Constants.slider.kS)
+      .withKV(Constants.slider.kV)
+      .withKA(Constants.slider.kA)
+      .withKG(Constants.slider.kG);
+    fxConfig.Slot0 = clConfigs;
+    SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
+      .withReverseSoftLimitEnable(Constants.slider.kSoftReverseLimitEnable)
+      .withReverseSoftLimitThreshold(Constants.slider.kSoftReverseLimit)
+      .withForwardSoftLimitEnable(Constants.slider.kSoftForwardLimitEnable)
+      .withForwardSoftLimitThreshold(Constants.slider.kSoftForwardLimit);
+    fxConfig.SoftwareLimitSwitch = softLimitSwitchConfigs;
+    MotorOutputConfigs mOutputConfigs = new MotorOutputConfigs()
+      .withNeutralMode(Constants.slider.kNeutralMode)
+      .withInverted((Constants.slider.kInverted) ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive);
+    fxConfig.MotorOutput = mOutputConfigs;
+    m_motor = new TalonFXS(Constants.slider.kMotorId);
+    m_motor.getConfigurator().apply(fxConfig);
   }
   
   @Override
@@ -56,7 +75,7 @@ public class SliderSubsystem extends SubsystemBase {
     m_motor.set(0.0);
   }
   private void start(boolean inverted) {
-    m_motor.set((inverted) ? Constants.tipper.kRevSpeed : Constants.tipper.kFwdSpeed);
+    m_motor.set((inverted) ? Constants.slider.kRevSpeed : Constants.slider.kFwdSpeed);
   }
   //#endregion local controls
 

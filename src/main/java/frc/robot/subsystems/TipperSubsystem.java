@@ -1,12 +1,12 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.hardware.TalonFXS;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +19,7 @@ import frc.robot.constants.Constants;
 public class TipperSubsystem extends SubsystemBase {
 	private static TipperSubsystem instance;
   //private and public variables defined here
-  private SparkMax m_motor;
+  private TalonFXS m_motor;
 
   /**
 	 * Returns the instance of the TipperSubsystem subsystem.
@@ -42,15 +42,28 @@ public class TipperSubsystem extends SubsystemBase {
    */
   public void init() {
     // set initial stuff, etc.
-    SparkMaxConfig defaultConfig = new SparkMaxConfig();
-    defaultConfig
-      .smartCurrentLimit(30)
-      .idleMode(IdleMode.kBrake)
-      .inverted(Constants.tipper.kInverted);
-
-      m_motor = new SparkMax(Constants.tipper.kMotorId, MotorType.kBrushed); //CIM is brushed motor
-      m_motor.configure(defaultConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    //m_motor.setInverted(false);
+    TalonFXSConfiguration fxConfig = new TalonFXSConfiguration();
+    Slot0Configs clConfigs = new Slot0Configs()
+      .withKP(Constants.tipper.kP)
+      .withKI(Constants.tipper.kI)
+      .withKD(Constants.tipper.kD)
+      .withKS(Constants.tipper.kS)
+      .withKV(Constants.tipper.kV)
+      .withKA(Constants.tipper.kA)
+      .withKG(Constants.tipper.kG);
+    fxConfig.Slot0 = clConfigs;
+    SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
+      .withReverseSoftLimitEnable(Constants.tipper.kSoftReverseLimitEnable)
+      .withReverseSoftLimitThreshold(Constants.tipper.kSoftReverseLimit)
+      .withForwardSoftLimitEnable(Constants.tipper.kSoftForwardLimitEnable)
+      .withForwardSoftLimitThreshold(Constants.tipper.kSoftForwardLimit);
+    fxConfig.SoftwareLimitSwitch = softLimitSwitchConfigs;
+    MotorOutputConfigs mOutputConfigs = new MotorOutputConfigs()
+      .withNeutralMode(Constants.tipper.kNeutralMode)
+      .withInverted((Constants.tipper.kInverted) ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive);
+    fxConfig.MotorOutput = mOutputConfigs;
+    m_motor = new TalonFXS(Constants.tipper.kMotorId);
+    m_motor.getConfigurator().apply(fxConfig);
   }
   
   @Override
