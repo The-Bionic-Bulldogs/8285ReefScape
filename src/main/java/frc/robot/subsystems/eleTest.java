@@ -42,7 +42,7 @@ public void runele(double speed){
     //This works, but can be dangerous if something goes wrong. See ElevatorSubsystem.java for an example of creating a follower
     //then, you can simply apply control only to the leader.
     e_motor1.set(speed);
-    e_motor2.set(-speed);
+    e_motor2.set(-speed);  //e_motor2.set(speed * -1.0); //is often easier to see that you are inverting the value, but both works
 
     // //your code
     // if(speed > 1){
