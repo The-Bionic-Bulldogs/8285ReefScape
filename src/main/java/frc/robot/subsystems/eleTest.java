@@ -33,8 +33,8 @@ public void runele(double speed){
     if(speed > 1){
     speed = 1;   
     } 
-    if(speed < 1) {
-    speed = -1;
+    if(speed < 1) { //this wont work, you are saying anything less than 1 is full reverse
+    speed = -1; //TIP: dont use integers when its actually a double.  ie. use -1.0 instead of -1
     }
     if(Math.abs(speed) > 0.1){
     e_motor1.set(speed);
