@@ -19,11 +19,13 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.TipperSubsystem;
 
 public class RobotContainer {
     //init the subsystems
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
     public ClimberSubsystem climber = ClimberSubsystem.getInstance();
+    public TipperSubsystem tipper = TipperSubsystem.getInstance();
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -75,11 +77,15 @@ public class RobotContainer {
         joystick.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         // These are your bindings for your subsystems
+        //left and right bumpers for intake/outtake
         joystick.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
         joystick.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
-
+        //pov up and down for climber
         joystick.povUp().onTrue(climber.fwdCommand()).onFalse(climber.stopCommand());
         joystick.povDown().onTrue(climber.revCommand()).onFalse(climber.stopCommand());
+        //pov left and right for tipper
+        joystick.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
+        joystick.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
