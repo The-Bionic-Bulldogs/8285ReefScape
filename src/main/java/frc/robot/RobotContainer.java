@@ -78,6 +78,9 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
         joystick.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
 
+        joystick.povUp().onTrue(climber.fwdCommand()).onFalse(climber.stopCommand());
+        joystick.povDown().onTrue(climber.revCommand()).onFalse(climber.stopCommand());
+
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
