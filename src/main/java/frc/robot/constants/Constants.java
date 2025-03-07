@@ -43,6 +43,7 @@ public class Constants {
     public class lifter {
       public static final int kMotorId = 16; //id of climber motor
       public static final boolean kInverted = false; //invert motor
+      public static final NeutralMode kNeutralMode = NeutralMode.Brake; //Brake or Coast
       public static final double kFwdSpeed = 1.0; //motor power for climb
       public static final double kRevSpeed = -1.0; //should be negative
     }
