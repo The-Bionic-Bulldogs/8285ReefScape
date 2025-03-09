@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -43,7 +44,8 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(Constants.JoyDriverID);
+    private final CommandXboxController dj = new CommandXboxController(Constants.JoyDriverID);
+    private final CommandXboxController oj = new CommandXboxController(Constants.JoyOperID);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
@@ -57,45 +59,45 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(MathUtil.applyDeadband(-dj.getLeftY(),0.1) * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-dj.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-dj.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
         // You dont need these for competition
-        // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        // joystick.b().whileTrue(drivetrain.applyRequest(() ->
-        //     point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
+        // dj.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // dj.b().whileTrue(drivetrain.applyRequest(() ->
+        //     point.withModuleDirection(new Rotation2d(-dj.getLeftY(), -dj.getLeftX()))
         // ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        // joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // dj.back().and(dj.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // dj.back().and(dj.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // dj.start().and(dj.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // dj.start().and(dj.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // This resets the robot so the whatever direction it is aiming is considered zero (away from the driver)
         // reset the field-centric heading on back button press
-        joystick.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        dj.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         // These are your bindings for your subsystems
         //left and right bumpers for intake/outtake
-        joystick.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
-        joystick.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
+        oj.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
+        oj.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
         //pov up and down for lifter
-        joystick.povUp().onTrue(lifter.fwdCommand()).onFalse(lifter.stopCommand());
-        joystick.povDown().onTrue(lifter.revCommand()).onFalse(lifter.stopCommand());
+        dj.povUp().onTrue(lifter.fwdCommand()).onFalse(lifter.stopCommand());
+        dj.povDown().onTrue(lifter.revCommand()).onFalse(lifter.stopCommand());
         //pov left and right for tipper
-        joystick.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
-        joystick.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
+        dj.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
+        dj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
         //x and y for slider
-        joystick.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
-        joystick.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
+        dj.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
+        dj.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
         //a and b for the elevator
-        joystick.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
-        joystick.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
+        dj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
+        dj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
