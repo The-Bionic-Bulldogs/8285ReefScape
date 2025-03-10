@@ -7,6 +7,7 @@ import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -62,6 +63,7 @@ public class TipperSubsystem extends SubsystemBase {
       .withNeutralMode(Constants.tipper.kNeutralMode)
       .withInverted((Constants.tipper.kInverted) ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive);
     fxConfig.MotorOutput = mOutputConfigs;
+    fxConfig.Commutation.MotorArrangement = MotorArrangementValue.Minion_JST;
     m_motor = new TalonFXS(Constants.tipper.kMotorId);
     m_motor.getConfigurator().apply(fxConfig);
   }
