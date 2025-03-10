@@ -111,7 +111,7 @@ public class Constants {
     }
     public class elevator {
       public static final int kMotor1Id = 14;
-      public static final boolean kInverted = false;
+      public static final boolean kInverted = true;
       public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
       public static final int kMotor2Id = 15;
       public static final boolean kInvertFromLeader = true;
