@@ -79,26 +79,32 @@ public class RobotContainer {
         // dj.start().and(dj.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // This resets the robot so the whatever direction it is aiming is considered zero (away from the driver)
+
+        //#region Driver Joystick
         // reset the field-centric heading on back button press
         dj.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
+        // These are your bindings for your subsystems
+        //#endregion Driver Joystick
+
+        //#region Operator Joystick
         // These are your bindings for your subsystems
         //left and right bumpers for intake/outtake
         oj.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
         oj.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
         //pov up and down for lifter
-        dj.povUp().onTrue(lifter.fwdCommand()).onFalse(lifter.stopCommand());
-        dj.povDown().onTrue(lifter.revCommand()).onFalse(lifter.stopCommand());
+        oj.povUp().onTrue(lifter.fwdCommand()).onFalse(lifter.stopCommand());
+        oj.povDown().onTrue(lifter.revCommand()).onFalse(lifter.stopCommand());
         //pov left and right for tipper
-        dj.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
-        dj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
+        oj.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
+        oj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
         //x and y for slider
-        dj.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
-        dj.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
+        oj.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
+        oj.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
         //a and b for the elevator
-        dj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
-        dj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
-
+        oj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
+        oj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
+        //#endregion
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
