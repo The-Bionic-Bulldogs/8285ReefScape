@@ -40,7 +40,7 @@ public class Constants {
       public static final boolean kInverted = false; //invert motor
       public static final NeutralMode kNeutralMode = NeutralMode.Brake;
       public static final double kFwdSpeed = 1.0; //motor power for intake/outtake
-      public static final double kRevSpeed = -1.0; //should be negative
+      public static final double kRevSpeed = -0.5; //should be negative
     }
     public class lifter {
       public static final int kMotorId = 16; //id of climber motor
@@ -53,12 +53,12 @@ public class Constants {
       public static final int kMotorId = 17; //id of tipper motor
       public static final boolean kInverted = false;
       public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
-      public static final double kFwdSpeed = 1.0;
-      public static final double kRevSpeed = -1.0; //should be negative
+      public static final double kFwdSpeed = 0.3;
+      public static final double kRevSpeed = -0.3; //should be negative
       //Limits
       public static final boolean kSoftForwardLimitEnable = false;
       public static final double kSoftForwardLimit = 3.0;
-      public static final boolean kSoftReverseLimitEnable = true;
+      public static final boolean kSoftReverseLimitEnable = false;
       public static final double kSoftReverseLimit = -0.01;
       //For motion magic
       public static final double kP = 5.0;
@@ -114,6 +114,9 @@ public class Constants {
       public static final boolean kInverted = true;
       public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
       public static final int kMotor2Id = 15;
+      public static final double kFwdSpeed = 0.35; //motor power for intake/outtake
+      public static final double kRevSpeed = -0.35; //should be negative
+
       public static final boolean kInvertFromLeader = true;
       //Limits
       public static final boolean kSoftForwardLimitEnable = false;

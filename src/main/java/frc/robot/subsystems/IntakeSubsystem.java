@@ -14,7 +14,7 @@ import frc.robot.constants.Constants;
  */
 public class IntakeSubsystem extends SubsystemBase {
 	private static IntakeSubsystem instance;
-  private WPI_TalonSRX m_motor;
+  public WPI_TalonSRX m_motor;
   //private and public variables defined here
 
 
@@ -69,7 +69,7 @@ public class IntakeSubsystem extends SubsystemBase {
     return runOnce(() -> start(false));
   }
   public Command revCommand() {
-    return runOnce(() -> start(true));
+    return  runOnce(() -> start(true)); 
   }
   //#endregion public commands
 }

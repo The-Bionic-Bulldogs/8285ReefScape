@@ -20,7 +20,7 @@ import frc.robot.constants.Constants;
 public class TipperSubsystem extends SubsystemBase {
 	private static TipperSubsystem instance;
   //private and public variables defined here
-  private TalonFXS m_motor;
+  public TalonFXS m_motor;
 
   /**
 	 * Returns the instance of the TipperSubsystem subsystem.
