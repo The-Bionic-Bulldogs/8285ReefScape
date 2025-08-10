@@ -56,18 +56,18 @@ public class Constants {
       public static final double kFwdSpeed = 0.3;
       public static final double kRevSpeed = -0.3; //should be negative
       //Limits
-      public static final boolean kSoftForwardLimitEnable = false;
-      public static final double kSoftForwardLimit = 3.0;
-      public static final boolean kSoftReverseLimitEnable = false;
-      public static final double kSoftReverseLimit = -0.01;
+      public static final boolean kSoftForwardLimitEnable = true;
+      public static final double kSoftForwardLimit = 0;
+      public static final boolean kSoftReverseLimitEnable = true;
+      public static final double kSoftReverseLimit = -44;
       //For motion magic
-      public static final double kP = 5.0;
-      public static final double kI = 0.0;
+      public static final double kP = 1.0;
+      public static final double kI = 0.0; 
       public static final double kD = 0.0;
-      public static final double kS = 0.02;
-      public static final double kG = 1.0;
-      public static final double kV = 3.5;
-      public static final double kA = 0.20;
+      public static final double kS = 0.0;
+      public static final double kG = 0.0;
+      public static final double kV = 0.0;
+      public static final double kA = 0.0;
       public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
       public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
       //These will be needed for position controls later
@@ -114,23 +114,23 @@ public class Constants {
       public static final boolean kInverted = true;
       public static final NeutralModeValue kNeutralMode = NeutralModeValue.Brake; //TalonFX and FXS use NeutralModeValue
       public static final int kMotor2Id = 15;
-      public static final double kFwdSpeed = 0.35; //motor power for intake/outtake
-      public static final double kRevSpeed = -0.35; //should be negative
+      public static final double kFwdSpeed = 0.2; //motor power for intake/outtake
+      public static final double kRevSpeed = -0.2; //should be negative
 
       public static final boolean kInvertFromLeader = true;
       //Limits
-      public static final boolean kSoftForwardLimitEnable = false;
-      public static final double kSoftForwardLimit = 5.0;
+      public static final boolean kSoftForwardLimitEnable = true;
+      public static final double kSoftForwardLimit = 67.0;
       public static final boolean kSoftReverseLimitEnable = true;
-      public static final double kSoftReverseLimit = -0.01;
+      public static final double kSoftReverseLimit = 0;
       //For motion magic
-      public static final double kP = 5.0;
+      public static final double kP = 1.0;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
-      public static final double kS = 0.02;
-      public static final double kG = 1.0;
-      public static final double kV = 3.5;
-      public static final double kA = 0.20;
+      public static final double kS = 0.0;
+      public static final double kG = 0.0;
+      public static final double kV = 0.0;
+      public static final double kA = 0.0;
       public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
       public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
       //These will be needed for position controls later
@@ -138,7 +138,6 @@ public class Constants {
         public static final double DOWN = 0.0;
         public static final double L1 = 1.0;
         public static final double L2 = 2.0;
-        public static final double L3 = 3.0;
         public static final double L4 = 4.5;
       }
     }

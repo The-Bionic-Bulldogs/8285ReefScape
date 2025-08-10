@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.595959595959596,
-        "y": 3.9945075757575754
+        "x": 7.608323863636363,
+        "y": 1.9110227272727274
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.630366161616162,
-        "y": 3.9843434343434336
+        "x": 6.511448863636364,
+        "y": 2.2999147727272726
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.97,
-        "y": 3.9945075757575754
+        "x": 5.195,
+        "y": 2.759
       },
       "prevControl": {
-        "x": 7.027070707070708,
-        "y": 3.95385101010101
+        "x": 6.232045454545455,
+        "y": 2.3102784090909085
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,13 +34,13 @@
   "eventMarkers": [
     {
       "name": "tiltLOneScore",
-      "waypointRelativePos": 0.0,
+      "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
       "name": "outtake",
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.8713496448303054,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -55,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 119.7448812969421
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Simple Folder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -0.5906572146467511
   },
   "useDefaultConstraints": true
 }

@@ -1,14 +1,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
@@ -22,6 +25,14 @@ public class TipperSubsystem extends SubsystemBase {
   //private and public variables defined here
   public TalonFXS m_motor;
 
+  private final MotionMagicVoltage m_positionRequest = new MotionMagicVoltage(0);
+
+  //private and public variables defined here
+  private PIDController m_pidController = new PIDController(
+    Constants.tipper.kP,
+    Constants.tipper.kI,
+    Constants.tipper.kD
+  );
   /**
 	 * Returns the instance of the TipperSubsystem subsystem.
 	 * The purpose of this is to only create an instance if one does not already exist.
@@ -53,6 +64,12 @@ public class TipperSubsystem extends SubsystemBase {
       .withKA(Constants.tipper.kA)
       .withKG(Constants.tipper.kG);
     fxConfig.Slot0 = clConfigs;
+
+    var motionConfig = new MotionMagicConfigs();
+    motionConfig.MotionMagicCruiseVelocity = 38.5 / 2.0; //-38.5
+    motionConfig.MotionMagicAcceleration = 507.0;
+    fxConfig.MotionMagic = motionConfig;
+
     SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
       .withReverseSoftLimitEnable(Constants.tipper.kSoftReverseLimitEnable)
       .withReverseSoftLimitThreshold(Constants.tipper.kSoftReverseLimit)
@@ -90,6 +107,9 @@ public class TipperSubsystem extends SubsystemBase {
   }
   public Command revCommand() {
     return runOnce(() -> start(true));
+  }
+  public Command magicToPositionCommand(double setpoint) {
+    return runOnce(() -> m_motor.setControl(m_positionRequest.withPosition(setpoint))); 
   }
   //#endregion public commands
 

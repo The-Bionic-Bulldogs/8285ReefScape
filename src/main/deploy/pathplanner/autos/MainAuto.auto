@@ -11,51 +11,39 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "tipDown"
+            "pathName": "coralOne"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.2
+            "waitTime": 1.5
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "stopTipDown"
+            "pathName": "scoreOne"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
+            "pathName": "coralTwo"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 1.5
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "stopShoot"
+            "pathName": "scoreTwo"
           }
         }
       ]

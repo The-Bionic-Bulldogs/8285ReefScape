@@ -12,6 +12,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.events.EventTrigger;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.MathUtil;
@@ -66,47 +67,25 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 private SendableChooser<Command> autoChooser = new SendableChooser<>();
+
     public RobotContainer() {
-        RobotConfig config;
-        try{
-          config = RobotConfig.fromGUISettings();
-        } catch (Exception e) {
-          // Handle exception as needed
-          e.printStackTrace();
-        }
-    
-        // Configure AutoBuilder last
-        AutoBuilder.configure(
-                this::getPose, // Robot pose supplier
-                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-                this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
-                ),
-                config, // The robot configuration
-                () -> {
-                  // Boolean supplier that controls when the path will be mirrored for the red alliance
-                  // This will flip the path being followed to the red side of the field.
-                  // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-    
-                  var alliance = DriverStation.getAlliance();
-                  if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                  }
-                  return false;
-                },
-                this // Reference to this subsystem to set requirements
-        );
-NamedCommands.registerCommand("tipDown", Commands.runOnce(()->{tipper.revCommand().withTimeout(1);}));
-NamedCommands.registerCommand("stopTipDown", Commands.runOnce(()->{tipper.stopCommand();}));
-NamedCommands.registerCommand("shoot", Commands.runOnce(()->{intake.revCommand().withTimeout(1);}));
-NamedCommands.registerCommand("stopShoot", Commands.runOnce(()->{intake.stopCommand();}));
 
 
-      // autoChooser = AutoBuilder.buildAutoChooser("forwardShoot");
-        //autoChooser.addOption("NEW NAME", getNEWAutonomousCommand());
+new EventTrigger("tiltLOneScore").onTrue(tipper.revCommand());//.alongWith(elevator.revCommand())); 
+
+new EventTrigger("adjustElevatorStation").onTrue(elevator.magicToPositionCommand(21)); //adjust elevator for station 
+
+new EventTrigger("tiltForStation").onTrue((tipper.magicToPositionCommand(-19)));
+
+//new EventTrigger("adjustElevatorl1").onTrue(Commands.runOnce(()->{System.out.println("adjusting elevator for L1");})); 
+new EventTrigger("outtake").onTrue(intake.fwdCommand()); //starting OUTTAKE
+
+new EventTrigger("intake").onTrue(intake.revCommand());//starting INTAKE
+
+new EventTrigger("stopOutIntake").onTrue(intake.stopCommand()); //stop INTAKE OR OUTTAKE
+
+      autoChooser = AutoBuilder.buildAutoChooser("SimpleMid");
+        //autoChooser.addOption("forwardShoot", getAutonomousCommand());
         SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
@@ -130,12 +109,6 @@ NamedCommands.registerCommand("stopShoot", Commands.runOnce(()->{intake.stopComm
         //     point.withModuleDirection(new Rotation2d(-dj.getLeftY(), -dj.getLeftX()))
         // ));
 
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-        // dj.back().and(dj.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // dj.back().and(dj.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // dj.start().and(dj.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // dj.start().and(dj.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // This resets the robot so the whatever direction it is aiming is considered zero (away from the driver)
 
@@ -157,14 +130,19 @@ NamedCommands.registerCommand("stopShoot", Commands.runOnce(()->{intake.stopComm
         //pov left and right for tipper
         oj.povLeft().onTrue(tipper.fwdCommand()).onFalse(tipper.stopCommand());
         oj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
-        //x and y for slider
-        oj.x().onTrue(slider.fwdCommand()).onFalse(slider.stopCommand());
-        oj.y().onTrue(slider.revCommand()).onFalse(slider.stopCommand());
+        
         //a and b for the elevator
         oj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
         oj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
+        // Bind R2 (right trigger) & L2 (left trigger) to set elevator to set pos
+        oj.leftTrigger().onTrue(elevator.magicToPositionCommand(21));
+        oj.rightTrigger().onTrue(elevator.magicToPositionCommand(54));
+        // Bind X to set elevator to pos
+        oj.x().onTrue(elevator.magicToPositionCommand(1));
+        // Bind Y to set tipper to set pos
+        oj.y().onTrue(tipper.magicToPositionCommand(-19));
         //#endregion
-        
+
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 

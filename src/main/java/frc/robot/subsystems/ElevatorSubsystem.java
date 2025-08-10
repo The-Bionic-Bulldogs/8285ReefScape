@@ -1,6 +1,6 @@
-
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
@@ -8,11 +8,14 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.units.measure.Angle;
 
 /**
  * This subsystem handles managing the Template.
@@ -22,8 +25,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 	private static ElevatorSubsystem instance;
   private TalonFX m_motor;
   private TalonFX m_follower;
-  //private and public variables defined here
 
+  private final MotionMagicVoltage m_positionRequest = new MotionMagicVoltage(0);
+
+  //private and public variables defined here
+  private PIDController m_pidController = new PIDController(
+    Constants.elevator.kP,
+    Constants.elevator.kI,
+    Constants.elevator.kD
+  );
 
   /**
 	 * Returns the instance of the ElevatorSubsystem subsystem.
@@ -57,6 +67,12 @@ public class ElevatorSubsystem extends SubsystemBase {
       .withKA(Constants.elevator.kA)
       .withKG(Constants.elevator.kG);
     fxConfig.Slot0 = clConfigs;
+
+    var motionConfig = new MotionMagicConfigs();
+    motionConfig.MotionMagicCruiseVelocity = 20.0 / 2.0; //20
+    motionConfig.MotionMagicAcceleration = 291;
+    fxConfig.MotionMagic = motionConfig;
+
     SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
       .withReverseSoftLimitEnable(Constants.elevator.kSoftReverseLimitEnable)
       .withReverseSoftLimitThreshold(Constants.elevator.kSoftReverseLimit)
@@ -100,4 +116,49 @@ public class ElevatorSubsystem extends SubsystemBase {
     return runOnce(() -> start(true));
   }
   //#endregion public commands
+
+  /**
+   * Returns the elevator position in rotations
+   */
+  
+/* 
+  public double getElevatorPosition() {
+    // Get the position in rotations (not Angle, not degrees)
+    return m_motor.getPosition().getValueAsDouble();// This returns the value in rotations
+  }
+
+
+  public void setElevatorPositionWPILib(double setpoint) {
+    double error = getElevatorPosition() - setpoint;
+
+    // Add a deadband to prevent oscillations
+    if (Math.abs(error) < 0.5) { // Increased deadband to 0.5 rotations
+        m_motor.set(0); // Stop the motor if within the deadband
+        return;
+    }
+
+    // Calculate PID output with feedforward
+    double feedforward = Constants.elevator.kG; // Gravity compensation
+    double output = m_pidController.calculate(getElevatorPosition(), setpoint) + feedforward;
+
+    // Limit motor output
+    output = Math.max(-0.2, Math.min(0.2, output)); // Limit output between -0.2 and 0.2
+    m_motor.set(output);
 }
+*/
+
+
+public Command magicToPositionCommand(double setpoint) {
+  return runOnce(() -> m_motor.setControl(m_positionRequest.withPosition(setpoint))); 
+}
+}
+
+
+
+/*public Command wpilibPIDToPositionCommand(double setpoint) {
+    return run(() -> setElevatorPositionWPILib(setpoint))
+      .until(() -> Math.abs(getElevatorPosition() - setpoint) < 1.2) // Increased tolerance to 1.2 rotations
+      .andThen(() -> m_motor.set(0)); 
+}
+  }
+*/ 
