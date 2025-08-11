@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.553761061946903,
-        "y": 3.9486725663716813
+        "x": 5.875042808219178,
+        "y": 2.5374571917808213
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.903,
-        "y": 4.204
+        "x": 5.24396404109589,
+        "y": 2.763
       },
       "prevControl": {
-        "x": 7.16703539823009,
-        "y": 4.060619469026549
+        "x": 6.446018835616439,
+        "y": 2.3873578767123287
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,14 +39,8 @@
       "command": null
     },
     {
-      "name": "adjustElevatorStation",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
       "name": "outtake",
-      "waypointRelativePos": 0.9913180741909996,
+      "waypointRelativePos": 0.9,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -61,7 +55,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.668
+    "rotation": 123.31099999999999
   },
   "reversed": false,
   "folder": "Simple Folder",

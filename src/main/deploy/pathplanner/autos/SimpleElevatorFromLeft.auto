@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SimpleElevatorFromLeft"
+            "pathName": "ForwardFromLeft"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "SimpleElevatorStepTwo"
+            "pathName": "SimpleElevatorFromLeftStep2"
           }
         },
         {
@@ -38,6 +38,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "SimpleElevatorAutos",
   "choreoAuto": false
 }
