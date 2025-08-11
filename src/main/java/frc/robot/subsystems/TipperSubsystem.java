@@ -66,7 +66,7 @@ public class TipperSubsystem extends SubsystemBase {
     fxConfig.Slot0 = clConfigs;
 
     var motionConfig = new MotionMagicConfigs();
-    motionConfig.MotionMagicCruiseVelocity = 38.5 / 2.0; //-38.5
+    motionConfig.MotionMagicCruiseVelocity = 38.5; //38.5
     motionConfig.MotionMagicAcceleration = 507.0;
     fxConfig.MotionMagic = motionConfig;
 

@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 5.903,
-        "y": 4.204488636363636
+        "y": 4.204
       },
       "prevControl": {
         "x": 6.950017045454544,
-        "y": 4.084829545454545
+        "y": 4.084340909090908
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.66778014613033
+    "rotation": -178.668
   },
   "reversed": false,
   "folder": "Simple Folder",
