@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SimpleElevatorFromRight"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SimpleElevatorStepTwo"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SimpleElevatorStepThree"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SimpleElevatorStepFour"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
