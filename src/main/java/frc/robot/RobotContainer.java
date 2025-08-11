@@ -138,7 +138,7 @@ new EventTrigger("stopOutIntake").onTrue(intake.stopCommand()); //stop INTAKE OR
         oj.leftTrigger().onTrue(elevator.magicToPositionCommand(21));
         oj.rightTrigger().onTrue(elevator.magicToPositionCommand(54));
         // Bind X to set elevator to pos
-        oj.x().onTrue(elevator.magicToPositionCommand(0.8));
+        oj.x().onTrue(elevator.magicToPositionCommand(0.5));
         // Bind Y to set tipper to set pos
         oj.y().onTrue(tipper.magicToPositionCommand(-19));
         //#endregion
