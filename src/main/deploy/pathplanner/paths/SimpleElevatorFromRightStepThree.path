@@ -20,7 +20,7 @@
         "y": 2.807919520547945
       },
       "prevControl": {
-        "x": 2.4341609589041098,
+        "x": 2.4341609589041093,
         "y": 1.8312500000000003
       },
       "nextControl": null,
@@ -40,6 +40,12 @@
     },
     {
       "name": "L3Pos",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "tiltLOneScore",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null

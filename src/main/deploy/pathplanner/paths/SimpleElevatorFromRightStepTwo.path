@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 3.6061643835616444,
-        "y": 1.530893835616438
+        "y": 1.5308938356164383
       },
       "isLocked": false,
       "linkedName": null
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 3.1702363013698633,
-        "y": 1.9364297945205475
+        "y": 1.9364297945205473
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,13 +33,13 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "adjustElevatorStation",
+      "name": "tiltForStation",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
-      "name": "tiltForStation",
+      "name": "stopOutIntake",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": null
