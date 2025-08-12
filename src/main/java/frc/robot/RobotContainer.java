@@ -86,7 +86,7 @@ new EventTrigger("stopOutIntake").onTrue(intake.stopCommand()); //stop INTAKE OR
 
 new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(54));
 
-      autoChooser = AutoBuilder.buildAutoChooser("SimpleElevatorFromMid");
+      autoChooser = AutoBuilder.buildAutoChooser("SimpleElevator");
         //autoChooser.addOption("forwardShoot", getAutonomousCommand());
         SmartDashboard.putData("Auto Mode", autoChooser);
 
