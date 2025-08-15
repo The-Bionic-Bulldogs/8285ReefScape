@@ -1,14 +1,13 @@
 
 package frc.robot.constants;
 
-import static edu.wpi.first.units.Units.InchesPerSecond;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.MetersPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Second;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 
 //Sometimes it is useful to comment out the following to see what variables or what controller buttons are not assigned yet
 @SuppressWarnings("unused") //We silence the "unused variables" warnings in VSCode
