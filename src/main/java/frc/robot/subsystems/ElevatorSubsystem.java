@@ -67,8 +67,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     fxConfig.Slot0 = clConfigs;
 
     var motionConfig = new MotionMagicConfigs();
-    motionConfig.MotionMagicCruiseVelocity = 20.0; //20
-    motionConfig.MotionMagicAcceleration = 291;
+    motionConfig.MotionMagicCruiseVelocity = Constants.elevator.MaxVelocity; //20
+    motionConfig.MotionMagicAcceleration = Constants.elevator.MaxAccelration; //291
     fxConfig.MotionMagic = motionConfig;
 
     SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
