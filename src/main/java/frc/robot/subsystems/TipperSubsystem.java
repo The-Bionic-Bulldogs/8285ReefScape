@@ -66,8 +66,8 @@ public class TipperSubsystem extends SubsystemBase {
     fxConfig.Slot0 = clConfigs;
 
     var motionConfig = new MotionMagicConfigs();
-    motionConfig.MotionMagicCruiseVelocity = 38.5; //38.5
-    motionConfig.MotionMagicAcceleration = 507.0;
+    motionConfig.MotionMagicCruiseVelocity = Constants.tipper.MaxVelocity; //38.5
+    motionConfig.MotionMagicAcceleration = Constants.tipper.MaxAccelration; //507
     fxConfig.MotionMagic = motionConfig;
 
     SoftwareLimitSwitchConfigs softLimitSwitchConfigs = new SoftwareLimitSwitchConfigs()
