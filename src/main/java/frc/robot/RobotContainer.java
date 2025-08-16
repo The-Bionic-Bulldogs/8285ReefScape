@@ -64,9 +64,9 @@ private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
 new EventTrigger("tiltLOneScore").onTrue(tipper.revCommand());//.alongWith(elevator.revCommand())); 
 
-new EventTrigger("adjustElevatorStation").onTrue(elevator.magicToPositionCommand(21)); //adjust elevator for station 
+new EventTrigger("adjustElevatorStation").onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L2)); //adjust elevator for station 
 
-new EventTrigger("tiltForStation").onTrue((tipper.magicToPositionCommand(-19)));
+new EventTrigger("tiltForStation").onTrue((tipper.magicToPositionCommand(Constants.tipper.positions.STATION)));
 
 //new EventTrigger("adjustElevatorl1").onTrue(Commands.runOnce(()->{System.out.println("adjusting elevator for L1");})); 
 new EventTrigger("outtake").onTrue(intake.fwdCommand()); //starting OUTTAKE
@@ -75,7 +75,7 @@ new EventTrigger("intake").onTrue(intake.revCommand());//starting INTAKE
 
 new EventTrigger("stopOutIntake").onTrue(intake.stopCommand()); //stop INTAKE OR OUTTAKE
 
-new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(54));
+new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L3));
 
       autoChooser = AutoBuilder.buildAutoChooser("SimpleElevator");
         //autoChooser.addOption("forwardShoot", getAutonomousCommand());
@@ -128,12 +128,12 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(54));
         oj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
         oj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
         // Bind R2 (right trigger) & L2 (left trigger) to set elevator to set pos
-        oj.leftTrigger().onTrue(elevator.magicToPositionCommand(21));
-        oj.rightTrigger().onTrue(elevator.magicToPositionCommand(54));
+        oj.leftTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L2)); //21.0
+        oj.rightTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L3)); //54.0
         // Bind X to set elevator to pos
-        oj.x().onTrue(elevator.magicToPositionCommand(0.5));
+        oj.x().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.DOWN)); // 0.5
         // Bind Y to set tipper to set pos
-        oj.y().onTrue(tipper.magicToPositionCommand(-19));
+        oj.y().onTrue(tipper.magicToPositionCommand(Constants.tipper.positions.STATION)); //-19.0
         //#endregion
 
         drivetrain.registerTelemetry(logger::telemeterize);

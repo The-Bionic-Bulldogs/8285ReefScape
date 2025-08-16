@@ -69,13 +69,13 @@ public class Constants {
       public static final double kA = 0.0;
       public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
       public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
+      public static final double MaxAccelration = 507;
+      public static final double MaxVelocity = 38.5;
       //These will be needed for position controls later
       public class positions {
-        public static final double DOWN = 0.0;
-        public static final double L1 = 1.0;
-        public static final double L2 = 2.0;
+        public static final double STATION = -19.0;
+        public static final double L2 = -21.0;
         public static final double L3 = 3.0;
-        public static final double L4 = 4.5;
       }
     }
     public class slider {
@@ -132,12 +132,14 @@ public class Constants {
       public static final double kA = 0.0;
       public static final double kMaxVelocity = Meters.of(1).per(Second).in(MetersPerSecond);
       public static final double kMaxAccel = Meters.of(2).per(Second).per(Second).in(MetersPerSecondPerSecond);
+      public static final double MaxAccelration = 291.0;
+      public static final double MaxVelocity = 20.0;
+
       //These will be needed for position controls later
       public class positions {
-        public static final double DOWN = 0.0;
-        public static final double L1 = 1.0;
-        public static final double L2 = 2.0;
-        public static final double L4 = 4.5;
+        public static final double DOWN = 0.5;
+        public static final double L2 = 21.0;
+        public static final double L3 = 54.0;
       }
     }
 }
