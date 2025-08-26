@@ -45,6 +45,12 @@
       "command": null
     },
     {
+      "name": "adjustElevatorStation",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
       "name": "intake",
       "waypointRelativePos": 0.8452380952380945,
       "endWaypointRelativePos": null,

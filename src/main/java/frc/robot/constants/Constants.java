@@ -74,7 +74,7 @@ public class Constants {
       
       //These will be needed for position controls later
       public class positions {
-        public static final double STATION = -19.0;
+        public static final double STATION = -30.6;
         
       }
     }

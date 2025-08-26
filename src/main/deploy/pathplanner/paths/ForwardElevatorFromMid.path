@@ -33,12 +33,6 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "adjustElevatorStation",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
       "name": "tiltLOneScore",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,

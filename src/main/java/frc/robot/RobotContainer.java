@@ -68,7 +68,7 @@ new EventTrigger("adjustElevatorStation").onTrue(elevator.magicToPositionCommand
 
 new EventTrigger("tiltForStation").onTrue((tipper.magicToPositionCommand(Constants.tipper.positions.STATION)));
 
-//new EventTrigger("adjustElevatorl1").onTrue(Commands.runOnce(()->{System.out.println("adjusting elevator for L1");})); 
+//new EventTrigger("adjustElevatorl1").onTrue(Commands.runOnce(()->{System.out.println("adjusting elevator for L1");}));  -22.595215
 new EventTrigger("outtake").onTrue(intake.fwdCommand()); //starting OUTTAKE
 
 new EventTrigger("intake").onTrue(intake.revCommand());//starting INTAKE
