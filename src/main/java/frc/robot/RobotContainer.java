@@ -96,14 +96,7 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
             )
         );
 
-        // You dont need these for competition
-        // dj.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        // dj.b().whileTrue(drivetrain.applyRequest(() ->
-        //     point.withModuleDirection(new Rotation2d(-dj.getLeftY(), -dj.getLeftX()))
-        // ));
-
-
-        // This resets the robot so the whatever direction it is aiming is considered zero (away from the driver)
+       
 
         //#region Driver Joystick
         // reset the field-centric heading on back button press

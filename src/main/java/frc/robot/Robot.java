@@ -74,5 +74,9 @@ public class Robot extends TimedRobot {
   @Override
   public void simulationPeriodic() {}
 
-  public void robotInit() {CameraServer.startAutomaticCapture();}
+  public void robotInit() {
+    
+    CameraServer.startAutomaticCapture();
+
+  }
 }
