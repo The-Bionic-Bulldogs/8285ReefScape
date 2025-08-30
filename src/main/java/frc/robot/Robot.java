@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
 
   public void robotInit() {
     
-    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture(); //start camera
 
   }
 }
