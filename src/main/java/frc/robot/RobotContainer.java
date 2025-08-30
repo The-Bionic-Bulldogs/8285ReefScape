@@ -125,8 +125,8 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
         oj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
         
         //a and b for the elevator
-        oj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
-        oj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
+        oj.b().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
+        oj.a().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
         // Bind R2 (right trigger) & L2 (left trigger) to set elevator to set pos
         oj.leftTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L2)); //21.0
         oj.rightTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L3)); //54.0
