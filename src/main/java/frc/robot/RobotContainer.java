@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.constants.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -32,6 +33,7 @@ public class RobotContainer {
     
 
     //init the subsystems
+    private final LimeLight limelight = new LimeLight();
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
     public LifterSubsystem lifter = LifterSubsystem.getInstance();
     public TipperSubsystem tipper = TipperSubsystem.getInstance();
@@ -95,8 +97,9 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
                     .withRotationalRate(MathUtil.applyDeadband(-dj.getRightX(),0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
-
-       
+         
+        new Trigger(() -> limelight.hasValidTarget())
+        .onTrue(intake.revCommand()).onFalse(intake.stopCommand());
 
         //#region Driver Joystick
         // reset the field-centric heading on back button press
