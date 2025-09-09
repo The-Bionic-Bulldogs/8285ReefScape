@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.constants.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -32,6 +33,7 @@ public class RobotContainer {
     
 
     //init the subsystems
+    private LimeLight limelight = new LimeLight();
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
     public LifterSubsystem lifter = LifterSubsystem.getInstance();
     public TipperSubsystem tipper = TipperSubsystem.getInstance();
@@ -86,24 +88,19 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
+        // and Y is defined as to the left according to WPILib convention
+        double rotationSensitivity = 0.5; // 50% for rotation.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(MathUtil.applyDeadband(-dj.getLeftY(),0.1) * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(MathUtil.applyDeadband(-dj.getLeftX(),0.1) * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(MathUtil.applyDeadband(-dj.getRightX(),0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(MathUtil.applyDeadband(-dj.getRightX(),0.1) * MaxAngularRate * rotationSensitivity) // Drive counterclockwise with negative X (left)
             )
         );
-
-        // You dont need these for competition
-        // dj.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        // dj.b().whileTrue(drivetrain.applyRequest(() ->
-        //     point.withModuleDirection(new Rotation2d(-dj.getLeftY(), -dj.getLeftX()))
-        // ));
-
-
-        // This resets the robot so the whatever direction it is aiming is considered zero (away from the driver)
+         
+        new Trigger(() -> limelight.hasValidTarget())
+        .onTrue(intake.revCommand()).onFalse(intake.stopCommand());
 
         //#region Driver Joystick
         // reset the field-centric heading on back button press
@@ -125,8 +122,8 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
         oj.povRight().onTrue(tipper.revCommand()).onFalse(tipper.stopCommand());
         
         //a and b for the elevator
-        oj.a().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
-        oj.b().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
+        oj.b().onTrue(elevator.fwdCommand()).onFalse(elevator.stopCommand());
+        oj.a().onTrue(elevator.revCommand()).onFalse(elevator.stopCommand());
         // Bind R2 (right trigger) & L2 (left trigger) to set elevator to set pos
         oj.leftTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L2)); //21.0
         oj.rightTrigger().onTrue(elevator.magicToPositionCommand(Constants.elevator.positions.L3)); //54.0
