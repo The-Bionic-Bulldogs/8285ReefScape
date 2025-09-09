@@ -33,7 +33,7 @@ public class RobotContainer {
     
 
     //init the subsystems
-    private final LimeLight limelight = new LimeLight();
+    private LimeLight limelight = new LimeLight();
     public IntakeSubsystem intake = IntakeSubsystem.getInstance();
     public LifterSubsystem lifter = LifterSubsystem.getInstance();
     public TipperSubsystem tipper = TipperSubsystem.getInstance();
@@ -88,13 +88,14 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
+        // and Y is defined as to the left according to WPILib convention
+        double rotationSensitivity = 0.5; // 50% for rotation.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(MathUtil.applyDeadband(-dj.getLeftY(),0.1) * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(MathUtil.applyDeadband(-dj.getLeftX(),0.1) * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(MathUtil.applyDeadband(-dj.getRightX(),0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(MathUtil.applyDeadband(-dj.getRightX(),0.1) * MaxAngularRate * rotationSensitivity) // Drive counterclockwise with negative X (left)
             )
         );
          
