@@ -112,6 +112,7 @@ new EventTrigger("L3Pos").onTrue(elevator.magicToPositionCommand(Constants.eleva
         //#region Operator Joystick
         // These are your bindings for your subsystems
         //left and right bumpers for intake/outtake
+        
         oj.leftBumper().onTrue(intake.fwdCommand()).onFalse(intake.stopCommand());
         oj.rightBumper().onTrue(intake.revCommand()).onFalse(intake.stopCommand());
         //pov up and down for lifter

@@ -123,7 +123,7 @@ public class Constants {
       public static final boolean kSoftReverseLimitEnable = true;
       public static final double kSoftReverseLimit = 0;
       //For motion magic
-      public static final double kP = 1.0;
+      public static final double kP = 1.4;
       public static final double kI = 0.0;
       public static final double kD = 0.0;
       public static final double kS = 0.0;
